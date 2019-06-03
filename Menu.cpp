@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Menu.hpp"
+#include "Budzet.hpp"
 #include "fstream"
 #include "iomanip"
 
@@ -21,7 +22,7 @@ void Menu::pokaz_menu()
     switch(odp)
     {
     case '1':
-        Budzet::podaj_kwote(b);
+        b.podaj_kwote();
         break;
     case '2':
         cout << "S - Staly"<<endl;
@@ -64,7 +65,7 @@ void Menu::wyswietl_wydatek()
 {
     ifstream fin;
     fin.open(file, ios_base::in | ios_base::binary);
-    if (file.is_open())
+    if (fin.is_open())
     {
         cout << "Lista twoich aktualnych wydatkow stalych: "<<endl;
         while (fin.read((char *) &wyd, sizeof wyd))
@@ -93,7 +94,7 @@ void Menu::wyswietl_wydatek()
     }
     fout.close();
     fin.open(file, ios_base::in | ios_base::binary);
-    if (file.is_open())
+    if (fin.is_open())
     {
         cout << "Lista twoich aktualnych wydatkow stalych: "<<endl;
         while (fin.read((char *) &wyd, sizeof wyd))

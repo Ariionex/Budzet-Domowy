@@ -4,7 +4,9 @@
 class Menu
 {
 public:
-    char * file;
+    const char * file;
+    Budzet b;
+    Wydatek wyd;
     //double kwota;
     ////////////////
     void pokaz_menu();

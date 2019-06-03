@@ -6,9 +6,10 @@ using namespace std;
 class Wydatek
 {
 public:
-    char nazwa[20];
+    enum{LI=20};
+    const char  nazwa[LI];
     double kwota;
-    Wydatek(string naz = " ",double k =0) : nazwa(naz),kwota(k){}
+    Wydatek(const char naz[LI] = " ",double k =0) : nazwa(naz),kwota(k){}
 };
 
 class Budzet
@@ -21,7 +22,7 @@ private:
     vector<Wydatek> n_wydatek{}; //wydatek nieregularny
     //vector<Wydatek> *wsk = nullptr;
 public:
-    void podaj_kwote(Budzet  d);
+    void podaj_kwote();
     void dodaj_wydatek();
     void wyswietl_wydatek(vector<Wydatek> );
     void pokaz_wynik();

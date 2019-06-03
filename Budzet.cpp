@@ -3,12 +3,12 @@
 
 using namespace std;
 
-void Budzet::podaj_kwote(Budzet  d)
+void Budzet::podaj_kwote()
 {
     cout<<"Podaj kwote do dyspozycji: ";
-    cin>>d.cal_kwota;
+    cin>>cal_kwota;
     cout<<endl;
-    cout<<"Calkowita kwota wynosi: "<<d.cal_kwota<<endl;
+    cout<<"Calkowita kwota wynosi: "<<cal_kwota<<endl;
 }
 
 /*void Budzet::dodaj_wydatek()
