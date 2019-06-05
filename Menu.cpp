@@ -23,11 +23,13 @@ void Menu::pokaz_menu()
     {
     case '1':
         b.podaj_kwote();
+        pokaz_menu();
         break;
     case '2':
         cout << "S - Staly"<<endl;
         cout << "J - Jednorazowy"<<endl;
         cout << "N - Nieregularny"<<endl;
+        cout << "A - Wyswietl listy wszysktich wydatkow"<<endl;
         cout << "W - Wroc do menu"<<endl;
         char o;
         cin>>o;
@@ -37,15 +39,23 @@ void Menu::pokaz_menu()
             case 's':
                 cout<<"Wydatek staly"<<endl;
                 file="wydatki stale.dat";
+                wyswietl_wydatek();
                 break;
             case 'J':
             case 'j':
                 cout<<"Wydatek jednorazowy"<<endl;
+                file="wydatki jednorazowe.dat";
+                wyswietl_wydatek();
                 break;
             case 'N':
             case 'n':
-                cout<<"Wydatek nieregularny"<<endl;
+                cout<<"Wydatek nieregularny (rocznie)"<<endl;
+                file="wydatki nieregularne.dat";
+                wyswietl_wydatek();
                 break;
+            case 'A':
+            case 'a':
+                cout<<"Wszystkie wydatki"<<endl;
             case 'W':
             case 'w':
                 pokaz_menu();
@@ -54,6 +64,8 @@ void Menu::pokaz_menu()
         break;
     case '3':
         cout << "Wynik"<<endl;
+        b.pokaz_wynik();
+
         break;
     case '4':
         exit(EXIT_SUCCESS);
@@ -65,13 +77,19 @@ void Menu::wyswietl_wydatek()
 {
     ifstream fin;
     fin.open(file, ios_base::in | ios_base::binary);
-    if (fin.is_open())
+    if (!(fin.is_open()))
+        {
+            cout<<"Nie ma takiego pliku, ale zaraz to naprawimy :)"<<endl;
+            ofstream fout(file);
+            cout<<"Puf... i juz mamy"<<endl;
+        }
+    else if (fin.is_open())
     {
-        cout << "Lista twoich aktualnych wydatkow stalych: "<<endl;
+        cout << "Lista twoich aktualnych wydatkow: "<<endl;
         while (fin.read((char *) &wyd, sizeof wyd))
         {
             cout<<setw(20)<< wyd.nazwa<<": "
-                <<setprecision(2)<<setw(12)<<wyd.kwota<<endl;
+                <<setprecision(4)<<setw(12)<<wyd.kwota<<endl;
         }
     fin.close();
     }
@@ -82,30 +100,40 @@ void Menu::wyswietl_wydatek()
         exit(EXIT_FAILURE);
     }
     cout<<"Podaj nowy wydatek (aby zakonczyc, wprowadz pusty wiersz)\n";
-    cin.get(wyd.nazwa,20);
-    while (wyd.nazwa[0] != '\0')
+    cin.ignore();
+    getline(cin,wyd.nazwa);
+    while (!wyd.nazwa.empty())
     {
         cout<<"Podaj kwote: ";
         cin>>wyd.kwota;
         cin.ignore();
         fout.write((char *) &wyd, sizeof wyd);
         cout<<"Podaj nowy wydatek (aby zakonczyc, wprowadz pusty wiersz)\n";
-        cin.get(wyd.nazwa,20);
+        getline(cin,wyd.nazwa);
     }
     fout.close();
     fin.open(file, ios_base::in | ios_base::binary);
     if (fin.is_open())
     {
-        cout << "Lista twoich aktualnych wydatkow stalych: "<<endl;
+        cout << "Lista twoich aktualnych wydatkow: "<<endl;
         while (fin.read((char *) &wyd, sizeof wyd))
         {
             cout<<setw(20)<< wyd.nazwa<<": "
-                <<setprecision(2)<<setw(12)<<wyd.kwota<<endl;
+                <<setprecision(4)<<setw(12)<<wyd.kwota<<endl;
         }
     fin.close();
     }
-    cout<<"Koniec."<<endl;
+    cout<<"Chcesz wrocic do menu ?"<<endl;
+    cout<<"T/N"<<endl;
+    char odp;
+    cin>>odp;
+    if (odp=='T'||odp=='t')
+        pokaz_menu();
+    else
+        cout<<"Koniec."<<endl;
+        exit(EXIT_SUCCESS);
 }
+
 
 
 

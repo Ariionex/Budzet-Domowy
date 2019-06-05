@@ -6,7 +6,6 @@ using namespace std;
 
 int main()
 {
-    Budzet b;
     Menu m;
     m.pokaz_menu();
     /*b.podaj_kwote();
