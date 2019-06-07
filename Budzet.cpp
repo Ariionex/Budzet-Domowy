@@ -12,7 +12,7 @@ void Budzet::podaj_kwote()
     cout<<"Calkowita kwota wynosi: "<<cal_kwota<<endl;
 }
 
-double Budzet::sumuj(string f)
+double Budzet::sumuj(const string & f)
 {
     double x=0.0;
     ifstream fin(f, ios_base::in | ios_base::binary);
@@ -35,7 +35,7 @@ void Budzet::pokaz_wynik()
     saldo=cal_kwota-(sumuj("wydatki stale.dat")+sumuj_wyd_niereg("wydatki nieregularne.dat")+sumuj("wydatki jednorazowe.dat"));
     cout<<"Zostanie Ci na koniec tego miesiaca: "<<saldo<<" zl"<<endl;
 }
-double Budzet::sumuj_wyd_niereg(string f)
+double Budzet::sumuj_wyd_niereg(const string & f)
 {
     double x=0.0;
     x=sumuj(f);
